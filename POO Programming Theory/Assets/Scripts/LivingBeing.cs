@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.AI;
 
 /* MEMO
 Être vivant : classe abstraite
@@ -24,9 +25,12 @@ Action selection point
 3. Pick the best advertisement, get its action sequence
 4. Push the action sequence on your queue
  */
+
+
 /// <summary>
 /// Tous les êtres vivants héritent de cette classe.
 /// </summary>
+[RequireComponent (typeof (NavMeshAgent))]
 public abstract class LivingBeing : MonoBehaviour
 {
 	[Header ("État civil")]
@@ -49,6 +53,8 @@ public abstract class LivingBeing : MonoBehaviour
 	[Header ("Besoins")]
 	public List<Need> needsList = new List<Need> ();
 
+	private NavMeshAgent agent;
+
 	/// <remarks>
 	/// Les taux de modifications sont estimés sur la base de 200 points perdus en :
 	/// * 72 heures pour être affamé.
@@ -57,9 +63,12 @@ public abstract class LivingBeing : MonoBehaviour
 	/// </remarks>
 	public virtual void Awake ()
 	{
+		agent = GetComponent<NavMeshAgent> ();
+
 		Health = MaxHealth;
-		needsList.Add (new Need (Needs.EAT, -99.9f, -2.78f));
-		needsList.Add (new Need (Needs.DRINK, 60f, -8.33f));
+
+		needsList.Add (new Need (Needs.HUNGER, 80f, -2.78f));
+		needsList.Add (new Need (Needs.THIRST, 60f, -8.33f));
 		needsList.Add (new Need (Needs.REST, 80f, -4.17f));
 	}
 
@@ -75,4 +84,11 @@ public abstract class LivingBeing : MonoBehaviour
 			need.NeedUpdate ();
 		}
 	}
+
+	public virtual void SetDestination (Vector3 _target)
+	{
+		agent.SetDestination (_target);
+	}
+
+	public abstract Vector3 GetRandomPosition ();
 }
