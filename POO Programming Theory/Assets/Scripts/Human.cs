@@ -41,7 +41,7 @@ public class Human : LivingBeing
 
 	public override Vector3 GetRandomPosition ()
 	{
-		Vector2 position = (Vector2.one * 2f) + Random.insideUnitCircle.normalized * 3f;
+		Vector2 position = (Vector2.one * 2f) + (Random.insideUnitCircle.normalized * 3f);
 		return transform.position + new Vector3 (position.x, 0f, position.y);
 	}
 }

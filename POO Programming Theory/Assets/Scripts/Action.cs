@@ -10,6 +10,9 @@ public class Action
 	public ActionType actionType;
 	public Vector3 target;
 
+	private float timer;
+	private bool pauseFlag;
+
 	public Action (Human _villager, ActionType _actionType, Vector3 _target)
 	{
 		villager = _villager;
@@ -34,6 +37,9 @@ public class Action
 				break;
 			case ActionType.SLEEP:
 				break;
+			case ActionType.STANDBY:
+				actionResult = ActionStandby ();
+				break;
 			default:
 				break;
 		}
@@ -55,6 +61,18 @@ public class Action
 
 		villager.SetDestination (target);
 
+		return false;
+	}
+
+	private bool ActionStandby ()
+	{
+		if (pauseFlag == false)
+		{
+			pauseFlag = true;
+			timer = Random.Range (1f, 5f);
+		}
+		
+		
 		return false;
 	}
 }

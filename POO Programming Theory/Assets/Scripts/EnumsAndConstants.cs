@@ -1,6 +1,6 @@
 public enum HealthState { HEALTHY, SICK, POISONED, WOUNDED, DEAD }
 public enum Needs { HUNGER, THIRST, REST }
-public enum ActionType { NONE, MOVE, EAT, DRINK, SLEEP }
+public enum ActionType { NONE, STANDBY, MOVE, EAT, DRINK, SLEEP }
 
 public class Constants
 {
